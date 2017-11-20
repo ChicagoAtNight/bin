@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+#
+# hl - Highlight utility
+# Alexander Elman (chicagoatnite->gmail.com)
+# Provides highlighting to piped text from common programs like cat
+#
+# Usage: cat foo.txt | key1 key2 key3
+
+use Term::ANSIColor;
+# set highlight color
+@hlcolor = ("white on_red", "white on_blue", "white on_green", "red on_white", "red", "blue", "yellow", "red on_yellow", "red on_cyan", "blue on_yellow");
+my $unsetcolor = color('reset');
+if ($#ARGV > 10) {
+    print "Error: Too many arguments.\n";
+    exit;
+}
+
+while (<STDIN>) {
+    $line = $_;
+    $i = 0;
+    foreach (@ARGV) {
+	my $setcolor = color("$hlcolor[$i]");
+	$line =~ s/($_)/$setcolor$1$unsetcolor/gi; # case insensitive
+	++$i;
+    }
+    print $line;
+}

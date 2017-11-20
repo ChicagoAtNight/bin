@@ -1,0 +1,16 @@
+#!/bin/bash
+
+LOGDIR=$HOME/screenlog
+BACKUPDIR=$HOME/screenlog/`date +%Y`
+CUR_MONTH=`date +%m`
+
+# backup logs if backup doesn't already exist
+if [ ! -e $BACKUPDIR/$CUR_MONTH.tar.gz ]; then
+    if [ ! -e $BACKUPDIR ]; then
+	mkdir $BACKUPDIR
+    fi
+    tar -cvf $BACKUPDIR/$CUR_MONTH.tar $LOGDIR/screenlog*.sz --remove-files
+    gzip $BACKUPDIR/$CUR_MONTH.tar
+else
+    echo "Backup already achieved for this month. Remove backup file to force another backup."
+fi

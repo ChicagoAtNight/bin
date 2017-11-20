@@ -1,0 +1,10 @@
+#!/bin/bash
+
+LOGDIR=$HOME/screenlog
+FILES=` ls $LOGDIR | egrep screenlog.*[^.sz]$`
+cd $LOGDIR
+# strip various whitespace impediments to a nice human readable experience
+for n in $LOGDIR/screenlog*[^.sz]$; do
+    perl -ne 's/\x1b[[()=][;?0-9]*[0-9A-Za-z]?//g;s/\r//g;s/\007//g;print' < $n > $n.sz;
+    rm -rf $n
+done

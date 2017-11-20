@@ -1,0 +1,11 @@
+#!/bin/bash
+countdown() {
+    timeleft=$1
+    while [[ "$timeleft" > 0 ]]; do
+        timeleft=$(( $timeleft - 1 ));
+        echo $timeleft
+        export timeleft
+        sleep 1
+    done
+}
+
