@@ -3,9 +3,24 @@ countdown() {
     timeleft=$1
     while [[ "$timeleft" > 0 ]]; do
         timeleft=$(( $timeleft - 1 ));
-        echo $timeleft
+	printtime $(( timeleft / 3600 )) $(( timeleft % 3600 / 60 )) $(( timeleft % 60 )) 
         export timeleft
         sleep 1
     done
 }
 
+printnum() {
+    printf "%02d" "$1"
+}
+
+printtime() {
+    hours="$1"
+    minutes="$2"
+    seconds="$3"
+    printnum ${hours}
+    printf ":"
+    printnum ${minutes}
+    printf ":"
+    printnum ${seconds}
+    printf "\n"
+}
